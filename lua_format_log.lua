@@ -84,7 +84,9 @@ end
 
 function lua_format_log:__flushFile(str)
 	if self.__target ~= "stdout" then
-		--TODO
+		local fp = io.open(self.__target, "a")
+		fp:write(str)
+		fp:close()
 	end
 end
 
