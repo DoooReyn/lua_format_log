@@ -99,4 +99,4 @@ log:fatal("this is fatal message")
 ## TODO
 
 - ✔ stdout
-- ❌ file
+- ✔ file
