@@ -1,5 +1,9 @@
 # lua_format_log
 
+## Dependencies
+
+- [lua-string-interpolate](https://github.com/DoooReyn/lua-string-interpolate)
+
 ## Format
 
 - `%D`: Date
