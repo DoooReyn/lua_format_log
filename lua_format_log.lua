@@ -28,7 +28,7 @@ local internals = {
 	},
 	__level = 1,
 	__abbrs = {'T', 'D', 'I', 'W', 'E', 'F', '_'},
-	__patterns = {'%D', '%U', '%L', '%S', '%F', '%V'},
+	__patterns = {'%D', '%U', '%L', '%S', '%V'},
 	__pattern = '[%L] [%D%U]\n%S\n => %V\n',
 	__target = 'stdout'
 }
