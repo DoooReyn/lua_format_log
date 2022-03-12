@@ -9,8 +9,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]] --
 
 local function get_lua_stack(from, max_depth)
-	from = from or 2
-	max_depth = max_depth or 3
+    from = from or 2
+    max_depth = max_depth or 3
     local info
     local depth = 1
     local level = from
@@ -19,14 +19,14 @@ local function get_lua_stack(from, max_depth)
 
     repeat
         info = debug.getinfo(level, 'Sl')
-        if info and info.what == 'Lua' and not info.source:match("lua_format_log") then
+        if info and info.what == 'Lua' and not info.source:match('lua_format_log') then
             stack[#stack + 1] = fmt:interpolate({depth, info.source, info.currentline})
-			depth = depth + 1
-			if depth > max_depth then
-				break
-			end
+            depth = depth + 1
+            if depth > max_depth then
+                break
+            end
         end
-		level = level + 1
+        level = level + 1
     until (not info)
 
     return table.concat(stack, '\n')
@@ -48,7 +48,7 @@ local __internals__ = {
     __patterns = {'%D', '%U', '%L', '%S', '%V'},
     __pattern = '[--%L--] [%D.%U]\n%S\n => %V\n',
     __target = 'stdout',
-	__stack_max_depth = 3,
+    __stack_max_depth = 3,
     __use_stdout = true,
     __out_file = nil
 }
@@ -62,7 +62,7 @@ function __internals__:__compile_pattern(level, msg)
             if v == '%D' then
                 r = os.date('%Y/%m/%d %H:%M:%S')
             elseif v == '%U' then
-                r = tostring(os.clock()):gsub("%.", ""):sub(1, 3)
+                r = tostring(os.clock()):gsub('%.', ''):sub(1, 3)
             elseif v == '%L' then
                 r = self.__abbrs[level]
             elseif v == '%S' then
