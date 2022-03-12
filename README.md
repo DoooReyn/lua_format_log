@@ -15,89 +15,51 @@
 ## Usage
 
 ```lua
-local log = require("lua_format_log")
-log:set_level(log.levels.trace)
-log:set_pattern('[%L] [%D%U]\n%S\n => %V\n')
-log:trace("this is trace message")
-log:debug("this is debug message")
-log:info("this is info message")
-log:warn("this is warn message")
-log:error("this is error message")
-log:fatal("this is fatal message")
+local logger = require("lua_format_log")
+logger:set_pattern('[---%L---] [%D.%U]\n%S\n => %V\n')
+logger:set_level(logger.levels.info)
+logger:set_use_stdout(true)
+logger:info(('level = {1}'):interpolate({logger:get_level()}))
+local fmt = 'Hi! {who} am {name}, {who} am from {from}'
+local msg = fmt:interpolate({who = 'I', name = 'DoooReyn', from = 'China'})
+logger:trace(msg) -- can't see
+logger:debug(msg) -- can't see
+logger:info(msg)  -- ok
+logger:warn(msg)  -- ok
+logger:error(msg) -- ok
+logger:fatal(msg) -- ok
 ```
 
 ```cmd
-[LUA-print] [T] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:2
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is trace message
+[LUA-print] [---I---] [2022/03/12 10:43:31.058]
+ -> [1] .\app/views/MainScene.lua:232
+ -> [2] .\app/views/MainScene.lua:27
+ -> [3] .\packages/mvc/ViewBase.lua:20
+ => level = 3
 
-[LUA-print] [D] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:3
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is debug message
+[LUA-print] [---I---] [2022/03/12 10:43:31.058]
+ -> [1] .\app/views/MainScene.lua:237
+ -> [2] .\app/views/MainScene.lua:27
+ -> [3] .\packages/mvc/ViewBase.lua:20
+ => Hi! I am DoooReyn, I am from China
 
-[LUA-print] [I] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:4
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is info message
+[LUA-print] [---W---] [2022/03/12 10:43:31.058]
+ -> [1] .\app/views/MainScene.lua:238
+ -> [2] .\app/views/MainScene.lua:27
+ -> [3] .\packages/mvc/ViewBase.lua:20
+ => Hi! I am DoooReyn, I am from China
 
-[LUA-print] [W] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:5
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is warn message
+[LUA-print] [---E---] [2022/03/12 10:43:31.058]
+ -> [1] .\app/views/MainScene.lua:239
+ -> [2] .\app/views/MainScene.lua:27
+ -> [3] .\packages/mvc/ViewBase.lua:20
+ => Hi! I am DoooReyn, I am from China
 
-[LUA-print] [E] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:6
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is error message
-
-[LUA-print] [F] [2022/03/12 00:02:220]
- -> [1] .\app/views/MainScene.lua:7
- -> [2] =[C]:-1
- -> [3] =[C]:-1
- -> [4] .\packages/mvc/AppBase.lua:48
- -> [5] .\packages/mvc/AppBase.lua:40
- -> [6] .\packages/mvc/AppBase.lua:36
- -> [7] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:26
- -> [8] =[C]:-1
- -> [9] F:/repo/game/bee-native-engine/win32-build/bin/bee-native-engine/Debug/Resources/src/main.lua:29
- => this is fatal message
+[LUA-print] [---F---] [2022/03/12 10:43:31.058]
+ -> [1] .\app/views/MainScene.lua:240
+ -> [2] .\app/views/MainScene.lua:27
+ -> [3] .\packages/mvc/ViewBase.lua:20
+ => Hi! I am DoooReyn, I am from China
 ```
 
 ## TODO
